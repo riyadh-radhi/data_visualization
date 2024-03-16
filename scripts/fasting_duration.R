@@ -75,7 +75,8 @@ ggplot2::ggplot(fasting_df) +
   geom_text(mapping = aes(x = middle_point, y = month_ar, label = rtlr::str_rtl(fasting_in_hours)), size = 2) +
   labs(
     x = rtlr::str_rtl("اوقات الصيام"), y = rtlr::str_rtl("الشهر الميلادي"),
-    title = stringr::str_wrap(rtlr::str_rtl("اكثر ساعات الصيام في العراق تكون اذا رمضان صادف في شهر السابع واقصرها اذا صادف في الشهر الاول ميلاديا!"), width = 80)
+    title = stringr::str_wrap(rtlr::str_rtl("عدد ساعات الصيام يختلف هواي اذا رمضان صادف بشهر السابع مقارنة بشهر الواحد بالعراق :)"), width = 60),
+    caption = stringr::str_wrap(rtlr::str_rtl("الرسم البياني صمم بااستعمال لغة البرجمة R"), width = 60),
   ) +
   theme_bw() +
   theme(
@@ -89,7 +90,11 @@ ggplot2::ggplot(fasting_df) +
     axis.text.y = element_text(size = 6),
     axis.title = element_text(size = 7, face = "bold"),
     plot.title = element_text(
-      size = 8
+      size = 8, hjust = 1
+    ),
+    plot.caption = element_text(
+      hjust = 1,
+      size = 4
     )
   ) +
   scale_y_discrete(position = "right") +
