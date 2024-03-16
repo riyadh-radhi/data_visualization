@@ -6,7 +6,8 @@ box::use(
   ggplot2[...],
   tidyr[...],
   forcats[...],
-  rtlr[str_rtl]
+  rtlr[str_rtl],
+  stringr[...],
 )
 
 fasting_df <- readr::read_csv(file = here::here("raw_data", "Imsak and Futoor Time in Ramadhan 2024 _ 15Mar2024 - Sheet1.csv"))
@@ -72,7 +73,10 @@ ggplot2::ggplot(fasting_df) +
   geom_text(mapping = aes(x = imsak_decimal - 4, y = month_ar, label = rtlr::str_rtl(paste0(imsak_label, " الفجر"))), size = 2) +
   geom_text(mapping = aes(x = futoor_decimal + 4, y = month_ar, label = rtlr::str_rtl(paste0(futoor_label, " المغرب"))), size = 2) +
   geom_text(mapping = aes(x = middle_point, y = month_ar, label = rtlr::str_rtl(fasting_in_hours)), size = 2) +
-  labs(x = rtlr::str_rtl("اوقات الصيام"), y = rtlr::str_rtl("الشهر الميلادي")) +
+  labs(
+    x = rtlr::str_rtl("اوقات الصيام"), y = rtlr::str_rtl("الشهر الميلادي"),
+    title = stringr::str_wrap(rtlr::str_rtl("اكثر ساعات الصيام في العراق تكون اذا رمضان صادف في شهر السابع واقصرها اذا صادف في الشهر الاول ميلاديا!"), width = 80)
+  ) +
   theme_bw() +
   theme(
     panel.border = element_blank(),
@@ -83,7 +87,10 @@ ggplot2::ggplot(fasting_df) +
     axis.ticks = element_blank(),
     legend.position = "none",
     axis.text.y = element_text(size = 6),
-    axis.title = element_text(size = 7, face = "bold")
+    axis.title = element_text(size = 7, face = "bold"),
+    plot.title = element_text(
+      size = 8
+    )
   ) +
   scale_y_discrete(position = "right") +
   scale_x_continuous(expand = expand_scale(
