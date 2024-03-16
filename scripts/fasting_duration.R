@@ -36,6 +36,15 @@ fasting_df |>
   ) |>
   dplyr::select(-c("fasting_interval")) -> graph_df
 
+fasting_df <- fasting_df |>
+  dplyr::mutate(
+    imsak_decimal = round(lubridate::hour(imsak_time) + (lubridate::minute(imsak_time) / 60), 2),
+    futoor_decimal = round(lubridate::hour(futoor_time) + (lubridate::minute(futoor_time) / 60), 2),
+    month_ar = forcats::as_factor(month_ar),
+    imsak_label = paste0(lubridate::hour(imsak_time), ":", lubridate::minute(imsak_time)),
+    futoor_label = paste0(lubridate::hour(futoor_time), ":", lubridate::minute(futoor_time))
+  )
+
 graph_df |>
   dplyr::mutate(
     time_decimal = round(lubridate::hour(date) + (lubridate::minute(date) / 60), 2),
@@ -43,6 +52,16 @@ graph_df |>
   ) |>
   dplyr::mutate(month_ar = forcats::as_factor(month_ar)) -> graph_df
 
-ggplot2::ggplot(graph_df) +
-  ggplot2::geom_point(mapping = aes(x = time_decimal, y = month_ar)) +
-  theme_bw()
+ggplot2::ggplot(fasting_df) +
+  geom_segment(mapping = aes(x = imsak_decimal, y = month_ar, xend = futoor_decimal)) +
+  geom_text(mapping = aes(
+    x = imsak_decimal- 1,
+    y = month_ar,
+    label = imsak_label
+  ))+
+    geom_text(mapping = aes(
+    x = futoor_decimal + 1,
+    y = month_ar,
+    label = futoor_label
+  ))+
+theme_bw()
