@@ -60,10 +60,8 @@ fasting_df <- fasting_df |>
 #   ) |>
 #   dplyr::mutate(month_ar = forcats::as_factor(month_ar)) -> graph_df
 
-# Define a gradient color scale
 gradient_scale <- scale_color_gradient(low = "#A8E6CE", high = "#FF6B6B")
 
-# Your original ggplot code with gradient color scale added
 ggplot2::ggplot(fasting_df) +
   geom_segment(
     mapping = aes(x = imsak_decimal, y = month_ar, xend = futoor_decimal, color = futoor_decimal - imsak_decimal),
